@@ -9,8 +9,7 @@ import { Project, ProjectStatus, ViewState, INITIAL_BRIEF_SECTIONS, BriefSection
 import { GoogleGenAI } from "@google/genai";
 import { LanguageProvider } from './contexts/LanguageContext';
 
-// Ensure we have an API Key, though we won't block render if missing, just alert on action
-const apiKey = process.env.API_KEY;
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
 const AppContent: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>('DASHBOARD');

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"d:\\\\Augusto\\\\Desktop\\\\Sugus Product AI\\\\Product-AI-SUGUS\")",
+      "Bash(git -C \"d:/Augusto/Desktop/Sugus Product AI/Product-AI-SUGUS\" status)",
+      "Bash(dir)"
+    ]
+  }
+}

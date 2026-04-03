@@ -116,34 +116,34 @@ export const Dashboard: React.FC<DashboardProps> = ({ projects, onCreateProject,
           {/* Filters & Search */}
           <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-surface/30 p-2 rounded-xl border border-border">
             <div className="flex gap-1 bg-surface rounded-lg p-1 border border-border w-full sm:w-auto">
-              <button 
+              <Button
+                variant={filter === 'ALL' ? 'outline' : 'ghost'}
+                size="sm"
                 onClick={() => setFilter('ALL')}
-                className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all ${filter === 'ALL' ? 'bg-slate-700 text-white shadow-sm' : 'text-muted hover:text-text'}`}
               >
                 {t('dash.allProjects')}
-              </button>
-              <button 
+              </Button>
+              <Button
+                variant={filter === 'ACTIVE' ? 'outline' : 'ghost'}
+                size="sm"
                 onClick={() => setFilter('ACTIVE')}
-                className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all ${filter === 'ACTIVE' ? 'bg-slate-700 text-white shadow-sm' : 'text-muted hover:text-text'}`}
               >
                 {t('dash.active')}
-              </button>
-              <button 
+              </Button>
+              <Button
+                variant={filter === 'DRAFT' ? 'outline' : 'ghost'}
+                size="sm"
                 onClick={() => setFilter('DRAFT')}
-                className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all ${filter === 'DRAFT' ? 'bg-slate-700 text-white shadow-sm' : 'text-muted hover:text-text'}`}
               >
                 {t('dash.drafts')}
-              </button>
+              </Button>
             </div>
-            
-            <div className="relative w-full sm:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted h-4 w-4" />
-              <input 
-                type="text" 
-                placeholder={t('dash.search')} 
+
+            <div className="w-full sm:w-64">
+              <Input
+                placeholder={t('dash.search')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-background border border-border rounded-lg pl-9 pr-3 py-1.5 text-sm focus:ring-1 focus:ring-primary focus:outline-none"
               />
             </div>
           </div>
@@ -181,18 +181,23 @@ export const Dashboard: React.FC<DashboardProps> = ({ projects, onCreateProject,
                    <Zap size={16} className="text-yellow-400" /> {t('dash.quickActions')}
                 </h3>
                 <div className="space-y-2">
-                  <button onClick={onCreateProject} className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/5 text-sm text-muted hover:text-white transition-colors flex items-center gap-3 group">
-                    <div className="p-1.5 rounded-md bg-emerald-500/10 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
-                      <Plus size={14} />
-                    </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={onCreateProject}
+                    icon={<span className="p-1 rounded-md bg-emerald-500/10 text-emerald-400"><Plus size={14} /></span>}
+                    className="w-full"
+                  >
                     {t('dash.startBrief')}
-                  </button>
-                  <button className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/5 text-sm text-muted hover:text-white transition-colors flex items-center gap-3 group">
-                     <div className="p-1.5 rounded-md bg-violet-500/10 text-violet-400 group-hover:bg-violet-500 group-hover:text-white transition-colors">
-                      <Search size={14} />
-                    </div>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    icon={<span className="p-1 rounded-md bg-violet-500/10 text-violet-400"><Search size={14} /></span>}
+                    className="w-full"
+                  >
                     {t('dash.browseTemplates')}
-                  </button>
+                  </Button>
                 </div>
              </div>
           </div>
@@ -229,31 +234,31 @@ export const Dashboard: React.FC<DashboardProps> = ({ projects, onCreateProject,
 
 // --- Sub-Components for cleaner code ---
 
-const StatCard: React.FC<{ title: string; value: string | number; trend: string; trendUp: boolean; icon: React.ReactNode; color: string }> = ({ 
-  title, value, trend, trendUp, icon, color 
+const StatCard: React.FC<{ title: string; value: string | number; trend: string; trendUp: boolean; icon: React.ReactNode; color: string }> = ({
+  title, value, trend, trendUp, icon, color
 }) => (
-  <div className={`p-5 rounded-xl border bg-surface/50 backdrop-blur-sm ${color} transition-all duration-300 hover:bg-surface`}>
-    <div className="flex justify-between items-start mb-2">
-      <span className="text-muted text-xs font-medium uppercase tracking-wider">{title}</span>
-      {icon}
+  <Card className={`bg-surface/50 backdrop-blur-sm ${color} transition-all duration-300 hover:bg-surface`}>
+    <div className="p-5">
+      <div className="flex justify-between items-start mb-2">
+        <span className="text-muted text-xs font-medium uppercase tracking-wider">{title}</span>
+        {icon}
+      </div>
+      <div className="flex items-end gap-2">
+        <span className="text-3xl font-bold text-white tracking-tight">{value}</span>
+      </div>
+      <div className="flex items-center gap-1 mt-2">
+        {trendUp ? <TrendingUp size={12} className="text-emerald-400" /> : <TrendingUp size={12} className="text-red-400 rotate-180" />}
+        <span className="text-xs text-muted font-medium">{trend}</span>
+      </div>
     </div>
-    <div className="flex items-end gap-2">
-      <span className="text-3xl font-bold text-white tracking-tight">{value}</span>
-    </div>
-    <div className="flex items-center gap-1 mt-2">
-      {trendUp ? <TrendingUp size={12} className="text-emerald-400" /> : <TrendingUp size={12} className="text-red-400 rotate-180" />}
-      <span className="text-xs text-muted font-medium">{trend}</span>
-    </div>
-  </div>
+  </Card>
 );
 
 const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({ project, onClick }) => (
-  <div 
-    onClick={onClick}
-    className="group bg-surface border border-border rounded-xl p-5 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 cursor-pointer relative overflow-hidden"
-  >
+  <div onClick={onClick} className="group cursor-pointer">
+    <Card className="bg-surface hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 relative overflow-hidden">
     <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-emerald-500 to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-    
+    <div className="p-5">
     <div className="flex justify-between items-start mb-4 pl-2">
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-slate-700 to-slate-800 border border-white/5 flex items-center justify-center text-white font-bold text-lg shadow-inner">
@@ -302,5 +307,7 @@ const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({ proj
          </span>
       </div>
     </div>
+    </div>
+    </Card>
   </div>
 );

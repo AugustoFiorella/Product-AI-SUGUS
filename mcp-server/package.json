@@ -1,0 +1,14 @@
+{
+  "name": "ux-rag-mcp-server",
+  "version": "1.0.0",
+  "description": "RAG MCP server for Product AI UX knowledge base",
+  "type": "module",
+  "main": "rag-mcp-server.js",
+  "scripts": {
+    "start": "node rag-mcp-server.js",
+    "install-deps": "npm install"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}

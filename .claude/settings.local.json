@@ -3,7 +3,14 @@
     "allow": [
       "Bash(dir \"d:\\\\Augusto\\\\Desktop\\\\Sugus Product AI\\\\Product-AI-SUGUS\")",
       "Bash(git -C \"d:/Augusto/Desktop/Sugus Product AI/Product-AI-SUGUS\" status)",
-      "Bash(dir)"
+      "Bash(dir)",
+      "Bash(claude mcp:*)",
+      "Bash(npm install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(powershell -Command 'cd '\\\\''Product-AI-SUGUS'\\\\'' && git add . && git commit -m '\\\\''feat: Product AI - Material Web migration, gemini service updates, and project setup:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"Product-AI-SUGUS/commit.ps1\")",
+      "Bash(git --version)"
     ]
   }
 }

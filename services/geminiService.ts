@@ -178,3 +178,44 @@ export const generateUserJourney = async (
     return { nodes: [], edges: [] };
   }
 };
+
+const BRIEF_SYSTEM_PROMPT = `Sos un Senior Product Manager experto en PRDs.
+El usuario te va a describir un problema o idea de producto en una oración.
+Tu tarea es generar las 5 secciones del Product Brief:
+1. Executive Summary: visión general del producto (2-3 oraciones)
+2. Problem Statement: el dolor del usuario, no la solución (2-3 oraciones)
+3. Target Users: perfil demográfico y job-to-be-done (2-3 oraciones)
+4. Proposed Solution: propuesta de valor core (2-3 oraciones)
+5. Success Metrics: 3-4 KPIs verificables y medibles
+
+Respondé SOLO en JSON con esta estructura:
+{
+  "executiveSummary": string,
+  "problemStatement": string,
+  "targetUsers": string,
+  "proposedSolution": string,
+  "successMetrics": string
+}
+Sin markdown, sin explicaciones, solo el JSON.`;
+
+export interface BriefResult {
+  executiveSummary: string;
+  problemStatement: string;
+  targetUsers: string;
+  proposedSolution: string;
+  successMetrics: string;
+}
+
+export const generateBrief = async (idea: string): Promise<BriefResult> => {
+  const response = await ai.models.generateContent({
+    model: modelId,
+    contents: idea,
+    config: {
+      systemInstruction: BRIEF_SYSTEM_PROMPT,
+      responseMimeType: "application/json",
+    },
+  });
+
+  const text = response.text || "{}";
+  return JSON.parse(text) as BriefResult;
+};
